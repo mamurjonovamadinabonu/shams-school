@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAMS Xususiy Maktabi — Bog'lanish va Qabul</title>
+    <meta name="description" content="SHAMS Xususiy Maktabi bilan bog'laning yoki qabul uchun ariza to'ldiring. Biz 24 soat ichida siz bilan bog'lanamiz.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+
+        .contact-form-wrap {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(12, 43, 78, 0.06);
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .form-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 13px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.92rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--white);
+            transition: var(--transition);
+            outline: none;
+            appearance: none;
+        }
+
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230C2B4E' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(12, 43, 78, 0.08);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group input.tel-input {
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 24px rgba(12, 43, 78, 0.28);
+            margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8c00 100%);
+            box-shadow: 0 8px 30px rgba(245, 166, 35, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Alert xabarlar */
+        .alert-box {
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert-box.show { display: block; }
+        .alert-success {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            color: #16a34a;
+            text-align: center;
+        }
+        .alert-error {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            color: #dc2626;
+        }
+
+        /* Map & Info side */
+        .contact-info-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .map-container {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            height: 320px;
+            box-shadow: var(--shadow);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .info-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(12, 43, 78, 0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .info-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .info-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        .info-value a {
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .info-value a:hover {
+            color: var(--accent);
+        }
+
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hours-table tr:not(:last-child) td {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hours-table td {
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .hours-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .hours-block {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .hours-block h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 960px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form-wrap {
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">S</div>
+                <div class="nav-logo-text">
+                    <span>SHAMS Maktabi</span>
+                    <span>Xususiy va Mukammal</span>
+                </div>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menyuni ochish">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container" style="position:relative;z-index:1;">
+            <h1>Biz bilan Bog'laning</h1>
+            <p>SHAMS oilasiga qo'shilishga tayyormisiz? Ro'yxatdan o'tish formasini to'ldiring yoki biz bilan bevosita bog'laning — sizdan xabar kutamiz.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Asosiy</a>
+                <span class="sep">/</span>
+                <span>Bog'lanish</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="contact-layout">
+
+                <!-- CHAP: Qabul Formasi -->
+                <div class="contact-form-wrap reveal">
+                    <h2 class="form-title">📋 Qabul uchun Ariza</h2>
+                    <p class="form-subtitle">Quyidagi formani to'ldiring, qabul bo'limimiz siz bilan 24 soat ichida bog'lanadi.</p>
+
+                    <!-- Muvaffaqiyat xabari -->
+                    <div class="alert-box alert-success" id="successMsg">
+                        <p style="font-size:1.5rem;margin-bottom:8px;">✅</p>
+                        <strong>Ariza muvaffaqiyatli yuborildi!</strong><br>
+                        Rahmat! Qabul komissiyamiz 24 soat ichida siz bilan bog'lanadi.
+                    </div>
+
+                    <!-- Xato xabari -->
+                    <div class="alert-box alert-error" id="errorMsg"></div>
+
+                    <!-- FORMA (to'g'rilangan: action va method) -->
+                    <form id="enrollForm" action="submit.php" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">Ism *</label>
+                                <input type="text" id="firstName" name="firstName" placeholder="masalan: Akbar" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Familya *</label>
+                                <input type="text" id="lastName" name="lastName" placeholder="masalan: Toshmatov" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="grade">Nechanchi sinf? *</label>
+                            <select id="grade" name="grade" required>
+                                <option value="" disabled selected>— Sinfni tanlang —</option>
+                                <option value="1-sinf">1-sinf</option>
+                                <option value="2-sinf">2-sinf</option>
+                                <option value="3-sinf">3-sinf</option>
+                                <option value="4-sinf">4-sinf</option>
+                                <option value="5-sinf">5-sinf</option>
+                                <option value="6-sinf">6-sinf</option>
+                                <option value="7-sinf">7-sinf</option>
+                                <option value="8-sinf">8-sinf</option>
+                                <option value="9-sinf">9-sinf</option>
+                                <option value="10-sinf">10-sinf</option>
+                                <option value="11-sinf">11-sinf</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direction">Yo'nalishni tanlang *</label>
+                            <select id="direction" name="direction" required>
+                                <option value="" disabled selected>— Yo'nalishlar —</option>
+                                <option value="Axborot Texnologiyalari (IT)">Axborot Texnologiyalari (IT)</option>
+                                <option value="Robototexnika va Muhandislik">Robototexnika va Muhandislik</option>
+                                <option value="Aniq Fanlar (Matematika va Fizika)">Aniq Fanlar (Matematika va Fizika)</option>
+                                <option value="Tabiiy Fanlar (Biologiya va Kimyo)">Tabiiy Fanlar (Biologiya va Kimyo)</option>
+                                <option value="Chet Tillari">Chet Tillari (Ingliz, Nemis, Fransuz)</option>
+                                <option value="Xorijda O'qish">Xorijda O'qish dasturi</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Telefon raqam *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+998 XX XXX XX XX" class="tel-input" required>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            🎓 Arizani Yuborish
+                        </button>
+                    </form>
+                </div>
+
+                <!-- O'NG: Xarita + Ma'lumot -->
+                <div class="contact-info-wrap reveal">
+                    <!-- Google Map -->
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2998.123456789!2d71.213889!3d40.459346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDDCsDI3JzMzLjYiTiA3McKwMTInNTAuMCJF!5e0!3m2!1suz!2s!4v1700000000000!5m2!1suz!2s"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="SHAMS Maktabi joylashuvi Google Maps'da">
+                        </iframe>
+                    </div>
+
+                    <!-- Ma'lumot kartochkalari -->
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="info-icon">📞</div>
+                            <div>
+                                <p class="info-label">Telefon Raqamimiz</p>
+                                <p class="info-value">
+                                    <a href="tel:+998916916699">+998 91 691 6699</a><br>
+                                    <a href="tel:+998950926699">+998 95 092 6699</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">✈️</div>
+                            <div>
+                                <p class="info-label">Telegram</p>
+                                <p class="info-value">
+                                    <a href="https://t.me/shamsschool" target="_blank">@SHAMS_XM</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">📷</div>
+                            <div>
+                                <p class="info-label">Instagram</p>
+                                <p class="info-value">
+                                    <a href="https://instagram.com/shams.school.official" target="_blank">@shams.school.official</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">📍</div>
+                            <div>
+                                <p class="info-label">Manzil</p>
+                                <p class="info-value">Farg'ona viloyati,<br>Bag'dod tumani,<br>Mo'jjal xalq banki yaqini</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ish vaqti -->
+                    <div class="hours-block">
+                        <h4>🕐 Ish Vaqtimiz</h4>
+                        <table class="hours-table">
+                            <tr>
+                                <td>Dushanba – Shanba</td>
+                                <td>9:00 – 18:00</td>
+                            </tr>
+                            <tr>
+                                <td>Yakshanba</td>
+                                <td>Dam olish kuni</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="nav-logo-icon">S</div>
+                        <div class="nav-logo-text">
+                            <span>SHAMS Maktabi</span>
+                            <span>Xususiy va Mukammal</span>
+                        </div>
+                    </div>
+                    <p>2024-yildan buyon yoshlarni yetishtirish, xarakter shakllantirish va global muvaffaqiyatga tayyorlashga bag'ishlangan nufuzli ta'lim muassasasi.</p>
+                    <div class="footer-social">
+                        <a href="https://t.me/shamsschool" class="social-btn" aria-label="Telegram">✈️</a>
+                        <a href="https://instagram.com/shams.school.official" class="social-btn" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+                        <a href="#" class="social-btn" aria-label="Facebook">👤</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Tezkor Havolalar</h4>
+                    <ul>
+                        <li><a href="index.html">Asosiy</a></li>
+                        <li><a href="groups.html">Dasturlarimiz</a></li>
+                        <li><a href="teachers.html">O'qituvchilar</a></li>
+                        <li><a href="news.html">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.html">Qabul</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Yo'nalishlar</h4>
+                    <ul>
+                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.html">Robototexnika</a></li>
+                        <li><a href="groups.html">Aniq Fanlar</a></li>
+                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.html">Chet Tillari</a></li>
+                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Bog'lanish</h4>
+                    <div class="footer-contact-item">
+                        <span class="icon">📞</span><span>+998 91 691 6699</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">✈️</span><span>@shamsschool</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">📷</span><span>@shams.school.official</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">📍</span><span>Farg'ona viloyati, Bag'dod tumani</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
+                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // URL dan success/error parametrlarini tekshirish
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === '1') {
+            document.getElementById('successMsg').classList.add('show');
+            document.getElementById('enrollForm').style.display = 'none';
+        }
+        if (urlParams.get('error')) {
+            const errEl = document.getElementById('errorMsg');
+            errEl.textContent = '⚠️ Xato: ' + decodeURIComponent(urlParams.get('error'));
+            errEl.classList.add('show');
+        }
+
+        // Forma yuborishda loading holati
+        document.getElementById('enrollForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submitBtn');
+            // Validatsiya
+            const fields = ['firstName','lastName','grade','direction','phone'];
+            let valid = true;
+            fields.forEach(f => {
+                const el = document.getElementById(f);
+                if (!el.value.trim()) { el.style.borderColor = '#ef4444'; valid = false; }
+                else el.style.borderColor = '';
+            });
+            if (!valid) {
+                e.preventDefault();
+                const errEl = document.getElementById('errorMsg');
+                errEl.textContent = '⚠️ Iltimos, barcha * bilan belgilangan maydonlarni to\'ldiring!';
+                errEl.classList.add('show');
+                return;
+            }
+            btn.textContent = '⏳ Yuborilmoqda...';
+            btn.disabled = true;
+        });
+    </script>
+</body>
+
+</html>

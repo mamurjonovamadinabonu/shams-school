@@ -1,0 +1,24 @@
+# Database fayllar (mahalliy, serverga joylashtirilmasin)
+database/*.db
+database/*.sqlite
+database/submissions.txt
+
+# OSPanel papkasi
+/OSPanel/
+
+# Tizim fayllar
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE fayllar
+.vscode/settings.json
+.idea/
+
+# PHP log fayllar
+*.log
+error_log
+
+# Upload qilingan rasmlar (ixtiyoriy — agar ularga ham versiya kerak bo'lsa o'chiring)
+# images/teachers/
+# images/news/

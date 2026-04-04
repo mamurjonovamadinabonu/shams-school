@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAMS Xususiy Maktabi — Dasturlarimiz</title>
+    <meta name="description"
+        content="SHAMS maktabining akademik dasturlarini o'rganing: IT, Robototexnika, Aniq Fanlar, Tabiiy Fanlar, Chet Tillari va Xorijda O'qish — 1-11-sinflar uchun.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Admission Banner */
+        .admission-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            margin-bottom: 72px;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admission-banner::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(245, 166, 35, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .admission-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .admission-text p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .grade-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .grade-pill {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+
+        .grade-pill.highlight {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Direction cards grid */
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .direction-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: var(--white);
+            transition: var(--transition);
+            border: 1px solid rgba(12, 43, 78, 0.06);
+            cursor: pointer;
+        }
+
+        .direction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .direction-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        .card-body {
+            padding: 28px;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .card-body h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .card-body p {
+            font-size: 0.87rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .card-tag {
+            background: var(--light);
+            color: var(--primary);
+            font-size: 0.73rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .card-footer-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-top: 16px;
+            transition: var(--transition);
+        }
+
+        .card-footer-link:hover {
+            color: var(--accent);
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .directions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admission-banner {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">S</div>
+                <div class="nav-logo-text">
+                    <span>SHAMS Maktabi</span>
+                    <span>Xususiy va Mukammal</span>
+                </div>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container" style="position:relative;z-index:1;">
+            <h1>Akademik Dasturlarimiz</h1>
+            <p>Har bir o'quvchining noyob salohiyatini kashf etish va kuchaytirish uchun mo'ljallangan 6 ta ixtisoslashtirilgan yo'nalish — 1-11-sinflar uchun.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Asosiy</a>
+                <span class="sep">/</span>
+                <span>Dasturlar</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <!-- Admission Banner -->
+            <div class="admission-banner reveal">
+                <div class="admission-text" style="position:relative;z-index:1;">
+                    <h2>🎒 Ochiq Qabul — 1-11-sinflar</h2>
+                    <p>Barcha sinflar teng qabul qilinadi. Har bir o'quvchi qayerdan boshlashidan qat'iy nazar jahon darajasidagi ta'limga haqlidir.</p>
+                    <div class="grade-pills">
+                        <span class="grade-pill highlight">1-sinf</span>
+                        <span class="grade-pill">2–5-sinflar</span>
+                        <span class="grade-pill">6–9-sinflar</span>
+                        <span class="grade-pill">10–11-sinflar</span>
+                    </div>
+                </div>
+                <a href="contact.html" class="btn btn-primary"
+                    style="background:var(--accent);box-shadow:0 4px 20px rgba(245,166,35,0.4);white-space:nowrap;position:relative;z-index:1;">Hozir
+                    Ariza Topshirish →</a>
+            </div>
+
+            <!-- Section header -->
+            <div style="text-align:center;margin-bottom:56px;">
+                <h2 class="section-title">Yo'nalishingizni Tanlang</h2>
+                <p class="section-subtitle" style="margin:0 auto;">Har bir dastur mutaxassis o'qitish, amaliy loyihalar va real dunyo aloqalarini birlashtiradi — o'quvchilarni universitetga va undan tashqariga tayyorlaydi.</p>
+            </div>
+
+            <!-- Direction cards -->
+            <div class="directions-grid">
+                <!-- IT -->
+                <div class="direction-card reveal">
+                    <div class="card-image">
+                        <img src="images/group_it.png" alt="Information Technology program">
+                        <span class="card-badge">IT</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon">💻</div>
+                        <h3>Axborot Texnologiyalari</h3>
+                        <p>Dasturlash, veb-ishlab chiqish, ma'lumotlar bazalari va kiberxavfsizlik dunyasiga sho'ng'ing. O'quvchilar birinchi kundan real loyihalarda ishlaydi va professional portfolio yaratadi.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Python</span>
+                            <span class="card-tag">Web Dev</span>
+                            <span class="card-tag">Ma'lumotlar Fani</span>
+                            <span class="card-tag">Sun'iy Intellekt</span>
+                        </div>
+                        <a href="contact.html" class="card-footer-link">IT ga Yozilish →</a>
+                    </div>
+                </div>
+
+                <!-- Robotics -->
+                <div class="direction-card reveal">
+                    <div class="card-image">
+                        <img src="images/group_robotics.png" alt="Robotics program">
+                        <span class="card-badge">Robotics</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon">🤖</div>
+                        <h3>Robototexnika va Muhandislik</h3>
+                        <p>LEGO Mindstorms, Arduino va sanoat sifatidagi komponentlar yordamida robotlarni loyihalash, qurish va dasturlash. O'quvchilar milliy va xalqaro robototexnika chempionatlarida qatnashadi.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Arduino</span>
+                            <span class="card-tag">LEGO EV3</span>
+                            <span class="card-tag">Elektronika</span>
+                            <span class="card-tag">CAD Dizayn</span>
+                        </div>
+                        <a href="contact.html" class="card-footer-link">Robototexnikaga Yozilish →</a>
+                    </div>
+                </div>
+
+                <!-- Exact Sciences -->
+                <div class="direction-card reveal">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80"
+                            alt="Exact Sciences program">
+                        <span class="card-badge">Exact Sciences</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon">📐</div>
+                        <h3>Aniq Fanlar</h3>
+                        <p>Milliy olimpiadalarga va elite muhandislik universitetlariga tayyorlaydigan ilg'or matematika va fizika dasturi. O'quvchilarimiz har yili medal qozonadi.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Yuqori Matematika</span>
+                            <span class="card-tag">Fizika</span>
+                            <span class="card-tag">Olimpiada Tayyorligi</span>
+                            <span class="card-tag">Statistika</span>
+                        </div>
+                        <a href="contact.html" class="card-footer-link">Aniq Fanlarga Yozilish →</a>
+                    </div>
+                </div>
+
+                <!-- Natural Sciences -->
+                <div class="direction-card reveal">
+                    <div class="card-image">
+                        <img src="images/group_science.png" alt="Natural Sciences program">
+                        <span class="card-badge">Natural Sciences</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon">🔬</div>
+                        <h3>Tabiiy Fanlar</h3>
+                        <p>Amaliy laboratoriya ishlari orqali biologiya, kimyo va Yer fanlari bilan tanishing. Zamonaviy laboratoriyalarimiz o'quvchilarga real tajribalar o'tkazish va ilmiy tadqiqot qilish imkonini beradi.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Biologiya</span>
+                            <span class="card-tag">Kimyo</span>
+                            <span class="card-tag">Lab Tadqiqoti</span>
+                            <span class="card-tag">Ekologiya</span>
+                        </div>
+                        <a href="contact.html" class="card-footer-link">Tabiiy Fanlarga Yozilish →</a>
+                    </div>
+                </div>
+
+                <!-- Foreign Languages -->
+                <div class="direction-card reveal">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=600&q=80"
+                            alt="Foreign Languages program">
+                        <span class="card-badge">Languages</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon">🌐</div>
+                        <h3>Chet Tillari</h3>
+                        <p>Ona tili ingliz, nemis, fransuz yoki xitoy bo'lgan o'qituvchilarimiz bilan chet tillarini mukammal o'rganing. O'quvchilar IELTS, TOEFL va DELF xalqaro sertifikatlariga tayyorlanadi.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Ingliz Tili</span>
+                            <span class="card-tag">Nemis Tili</span>
+                            <span class="card-tag">Fransuz Tili</span>
+                            <span class="card-tag">IELTS Tayyorligi</span>
+                        </div>
+                        <a href="contact.html" class="card-footer-link">Chet Tillariga Yozilish →</a>
+                    </div>
+                </div>
+
+                <!-- Study Abroad -->
+                <div class="direction-card reveal">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80"
+                            alt="Study Abroad opportunities">
+                        <span class="card-badge">Study Abroad</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-icon">✈️</div>
+                        <h3>Xorijda O'qish</h3>
+                        <p>O'quvchilarni Janubiy Koreya, Germaniya, AQSh va Turkiyadagi yetakchi universitetlarga ariza topshirish jarayonida to'liq stipendiya yo'riqnomasi bilan yo'naltiruvchi eksklyuziv dastur.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">AQSh</span>
+                            <span class="card-tag">Germaniya</span>
+                            <span class="card-tag">Janubiy Koreya</span>
+                            <span class="card-tag">Stipendiyalar</span>
+                        </div>
+                        <a href="contact.html" class="card-footer-link">Xorijda O'qish haqida →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="nav-logo-icon">S</div>
+                        <div class="nav-logo-text">
+                            <span>SHAMS School</span>
+                            <span>Private &amp; Excellence</span>
+                        </div>
+                    </div>
+                    <p>A premier educational institution dedicated to nurturing curious minds, building character, and
+                        preparing students for global success since 2024.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-btn" aria-label="Telegram">✈️</a>
+                        <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+                        <a href="#" class="social-btn" aria-label="Facebook">👤</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Tezkor Havolalar</h4>
+                    <ul>
+                        <li><a href="index.html">Asosiy</a></li>
+                        <li><a href="groups.html">Dasturlarimiz</a></li>
+                        <li><a href="teachers.html">O'qituvchilar</a></li>
+                        <li><a href="news.html">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.html">Qabul</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Yo'nalishlar</h4>
+                    <ul>
+                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.html">Robototexnika</a></li>
+                        <li><a href="groups.html">Aniq Fanlar</a></li>
+                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.html">Chet Tillari</a></li>
+                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Bog'lanish</h4>
+                    <div class="footer-contact-item">
+                        <span class="icon">📞</span><span>+998 91 691 6699</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">✈️</span><span>@shamsschool</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">📷</span><span>@shams.school.official</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">📍</span><span>Farg'ona viloyati, Bag'dod tumani</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
+                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

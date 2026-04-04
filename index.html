@@ -1,0 +1,787 @@
+﻿<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHAMS Xususiy Maktabi — Asosiy</title>
+    <meta name="description"
+        content="SHAMS Xususiy Maktabi — IT, Robototexnika, Tabiiy Fanlar va boshqa sohalarda jahon darajasidagi ta'lim taqdim etuvchi nufuzli xususiy maktab. 1–11-sinflar.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ---- Hero Slider ---- */
+        .hero-slider {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    rgba(7, 28, 51, 0.75) 0%,
+                    rgba(12, 43, 78, 0.55) 50%,
+                    rgba(7, 28, 51, 0.40) 100%);
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 0 48px 80px;
+            max-width: 700px;
+        }
+
+        .slide-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+        }
+
+        .slide h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .slide p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.82);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .slide-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Slider controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 36px;
+            right: 48px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .slider-dot.active {
+            background: var(--accent);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .slider-arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--white);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .slider-arrow:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            background: var(--primary);
+            padding: 28px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px 16px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        /* About section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 72px;
+            align-items: center;
+        }
+
+        .about-image-wrap {
+            position: relative;
+        }
+
+        .about-image-wrap img {
+            border-radius: var(--radius-lg);
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-badge {
+            position: absolute;
+            bottom: -24px;
+            right: -24px;
+            background: var(--accent);
+            color: var(--white);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(245, 166, 35, 0.45);
+        }
+
+        .about-badge span:first-child {
+            display: block;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .about-badge span:last-child {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.85;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            background: var(--light);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: var(--primary);
+        }
+
+        .feature-item:hover .fi-title,
+        .feature-item:hover .fi-desc {
+            color: var(--white);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .feature-item:hover .feature-icon {
+            background: var(--accent);
+        }
+
+        .fi-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2px;
+            transition: var(--transition);
+        }
+
+        .fi-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        /* Discount Block */
+        .discount-block {
+            background: #FFD700;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discount-block::before {
+            content: '🎓';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.08;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .discount-block::after {
+            content: '⭐';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.08;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .discount-block h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: #E53935;
+            font-weight: 900;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08);
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+
+        .discount-block p {
+            font-size: 1.05rem;
+            color: #7c2a00;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        /* Why SHAMS */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .why-card {
+            text-align: center;
+            padding: 40px 28px;
+            border-radius: var(--radius-lg);
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(12, 43, 78, 0.06);
+            transition: var(--transition);
+        }
+
+        .why-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .why-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(12, 43, 78, 0.25);
+            transition: var(--transition);
+        }
+
+        .why-card:hover .why-icon {
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8c00 100%);
+        }
+
+        .why-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .why-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245, 166, 35, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+::-webkit-file-upload-button
+        .cta-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+
+        .cta-banner p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .about-badge {
+                right: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item:nth-child(2) {
+                border-right: none;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .slide-content {
+                padding: 0 24px 100px;
+            }
+
+            .slider-controls {
+                right: 24px;
+                bottom: 28px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .hero-slider {
+                min-height: 580px;
+            }
+
+            .slide h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">S</div>
+                <div class="nav-logo-text">
+                    <span>SHAMS Maktabi</span>
+                    <span>Xususiy va Mukammal</span>
+                </div>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SLIDER -->
+    <section class="hero-slider" id="heroSlider">
+        <!-- Slide 1 -->
+        <div class="slide active" style="background-image: url('images/hero1.png');">
+            <div class="slide-content">
+                <span class="slide-tag">🏫 Welcome to SHAMS</span>
+                <h1>Kelajak Yetakchilarini<br>Bugun Shakllantirmoqdamiz</h1>
+                <p>An'ana va innovatsiya uyg'unlashgan nufuzli xususiy maktab. Biz ta'lim, texnologiya va xarakter rivojidagi mukammallik orqali qiziquvchan aqllarni tarbiyalaymiz.</p>
+                <div class="slide-actions">
+                    <a href="groups.html" class="btn btn-primary">Dasturlarni Ko'rish</a>
+                    <a href="contact.html" class="btn btn-outline"
+                        style="color:#fff;border-color:rgba(255,255,255,0.6);">Hozir Yozilish</a>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide" style="background-image: url('images/hero2.png');">
+            <div class="slide-content">
+                <span class="slide-tag">📚 Jahon Darajasidagi Ta'lim</span>
+                <h1>Raqamli Asrning<br>Zamonaviy Ta'limi</h1>
+                <p>Zamonaviy texnologiyalar bilan jihozlangan sinfxonalar, ilg'or texnologiyalar va ishtiyoqli o'qituvchilar birlashib, tengsiz o'quv muhitini yaratadi.</p>
+                <div class="slide-actions">
+                    <a href="teachers.html" class="btn btn-primary">O'qituvchilarimiz bilan Tanishing</a>
+                    <a href="news.html" class="btn btn-outline"
+                        style="color:#fff;border-color:rgba(255,255,255,0.6);">So'nggi Yangiliklar</a>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide" style="background-image: url('images/hero3.png');">
+            <div class="slide-content">
+                <span class="slide-tag">🎓 Kelajagingiz Shu Yerdan Boshlanadi</span>
+                <h1>1-sinfdan<br>Global Muvaffaqiyatga</h1>
+                <p>Ko'p tilli dasturlar, xorijda o'qish imkoniyatlari va xalqaro tan olingan o'quv dasturi orqali o'quvchilarni jahonning yetakchi universitetlariga tayyorlaymiz.</p>
+                <div class="slide-actions">
+                    <a href="contact.html" class="btn btn-primary">Hozir Ariza Topshiring</a>
+                    <a href="groups.html" class="btn btn-outline"
+                        style="color:#fff;border-color:rgba(255,255,255,0.6);">Yo'nalishlarni Ko'rish</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="slider-controls">
+            <button class="slider-arrow slider-prev" aria-label="Previous slide">&#8592;</button>
+            <div class="slider-dots">
+                <button class="slider-dot active" aria-label="Slide 1"></button>
+                <button class="slider-dot" aria-label="Slide 2"></button>
+                <button class="slider-dot" aria-label="Slide 3"></button>
+            </div>
+            <button class="slider-arrow slider-next" aria-label="Next slide">&#8594;</button>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <span class="stat-number">1200+</span>
+                    <p class="stat-label">O'quvchilar Soni</p>
+                </div>
+                <div class="stat-item reveal">
+                    <span class="stat-number">60+</span>
+                    <p class="stat-label">Malakali O'qituvchilar</p>
+                </div>
+                <div class="stat-item reveal">
+                    <span class="stat-number">15+</span>
+                    <p class="stat-label">Yillik Tajriba</p>
+                </div>
+                <div class="stat-item reveal">
+                    <span class="stat-number">98%</span>
+                    <p class="stat-label">Universitetga Kirish Darajasi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-wrap reveal">
+                    <img src="images/hero2.png" alt="SHAMS School — Modern classrooms">
+                    <div class="about-badge">
+                        <span>15+</span>
+                        <span>Years</span>
+                    </div>
+                </div>
+                <div class="about-text reveal">
+                    <p
+                        style="color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:0.8rem;margin-bottom:10px;">
+                        Maktabimiz Haqida</p>
+                    <h2 class="section-title">O'quvchilarni Yorqin Kelajakka Tayyorlaymiz</h2>
+                    <p style="color:var(--text-muted);line-height:1.8;margin-bottom:16px;">
+                        2024-yilda tashkil etilgan <strong>SHAMS Xususiy Maktabi</strong> mintaqaning eng nufuzli ta'lim
+                        muassasalaridan biri hisoblanadi. Bizning nomimiz — SHAMS, ya'ni "Quyosh" — yosh aqllarni
+                        yorug'lik sari yo'naltirishga bo'lgan sadoqatimizni aks ettiradi.
+                    </p>
+                    <p style="color:var(--text-muted);line-height:1.8;margin-bottom:24px;">
+                        1-11-sinflarni qamrab olgan o'quvchilar tarkibimiz bilan biz IT, Robototexnika, Tabiiy Fanlar, Aniq
+                        Fanlar va Chet Tillari bo'yicha ixtisoslashgan dasturlar bilan xalqaro miqyosda moslashtirilgan
+                        o'quv dasturini taklif etamiz. Bitiruvchilarimiz O'zbekiston va chet elning yetakchi universitetlarida
+                        o'rin egallaydi.
+                    </p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">💻</div>
+                            <div>
+                                <p class="fi-title">Smart Darsxonalar</p>
+                                <p class="fi-desc">Interaktiv taxtalar va zamonaviy texnologiyalar</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌍</div>
+                            <div>
+                                <p class="fi-title">Xalqaro Dasturlar</p>
+                                <p class="fi-desc">Xorijda o'qish imkoniyatlari</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏆</div>
+                            <div>
+                                <p class="fi-title">Mukofotlangan Maktab</p>
+                                <p class="fi-desc">Milliy olimpiada g'oliblari</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">👨‍🏫</div>
+                            <div>
+                                <p class="fi-title">Malakali O'qituvchilar</p>
+                                <p class="fi-desc">60+ sertifikatlangan pedagog</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="groups.html" class="btn btn-primary">Dasturlarimizni Ko'ring</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISCOUNT BLOCK -->
+    <section class="discount-block">
+        <div class="container" style="position:relative;z-index:1;">
+            <h2>🎉 Chegirmalar Mavjud!</h2>
+            <p>1–4-sinflar uchun maxsus imtiyozlar · Aka-singil uchun 25% gacha chegirma · Layoqat asosida stipendiyalar
+                mavjud</p>
+            <a href="contact.html" class="btn btn-primary"
+                style="margin-top:24px;background:#E53935;box-shadow:0 4px 20px rgba(229,57,53,0.4);">Chegirma uchun Ariza
+                →</a>
+        </div>
+    </section>
+
+    <!-- WHY SHAMS -->
+    <section class="section section-alt">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:56px;">
+                <h2 class="section-title">Nima uchun SHAMS ni Tanlash Kerak?</h2>
+                <p class="section-subtitle" style="margin:0 auto;">Biz darsliklardan tashqariga chiqib, ijodkorlik, tanqidiy fikrlash va xarakter shakllantirishni ta'minlaymiz.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card reveal">
+                    <div class="why-icon">🔬</div>
+                    <h3>STEM Mukammalligi</h3>
+                    <p>Jahon darajasidagi laboratoriyalar va innovatsiya markazlarida o'quvchilar fan, texnologiya va muhandislik orqali g'oyalarini amalga oshiradi.</p>
+                </div>
+                <div class="why-card reveal">
+                    <div class="why-icon">🌐</div>
+                    <h3>Global Doira</h3>
+                    <p>12 ta mamlakat universitetlari bilan hamkorlik o'quvchilarimizga xalqaro qarashlarga ega bo'lish va xorijda o'qish imkonini beradi.</p>
+                </div>
+                <div class="why-card reveal">
+                    <div class="why-icon">🧠</div>
+                    <h3>Tanqidiy Fikrlash</h3>
+                    <p>Sokrat o'qitish metodologiyamiz birinchi kundan boshlab tahliliy ko'nikmalar, ijodiy muammo hal qilish va etakchilikni rivojlantiradi.</p>
+                </div>
+                <div class="why-card reveal">
+                    <div class="why-icon">🤝</div>
+                    <h3>Mehribon Hamjamiyat</h3>
+                    <p>Har bir o'quvchi tanilgan, qadrlanilgan va to'liq salohiyatiga erishishga undалган qo'llab-quvvatlovchi, inkluziv maktab madaniyati.</p>
+                </div>
+                <div class="why-card reveal">
+                    <div class="why-icon">🏅</div>
+                    <h3>Isbotlangan Natijalar</h3>
+                    <p>SHAMS bitiruvchilarining 98 foizi o'zlari istagan universitetga kiradi. Olimpiada jamoalarimiz har yili milliy medallar qozonadi.</p>
+                </div>
+                <div class="why-card reveal">
+                    <div class="why-icon">📱</div>
+                    <h3>Raqamli Ta'lim</h3>
+                    <p>Har bir o'quvchiga qurilma, interaktiv smart taxtalar va kuchli e-learning platformasi ta'limni qulay va qiziqarli qiladi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner">
+        <div class="container" style="position:relative;z-index:1;">
+            <h2>Sayohatni Boshlashga Tayyormisiz?</h2>
+            <p>2025-2026 o'quv yiliga qabul boshlandi. O'rinlar cheklangan — farzandingizning o'rnini bugun ta'minlang.</p>
+            <a href="contact.html" class="btn btn-primary">Bugun Yoziling</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="nav-logo-icon">S</div>
+                        <div class="nav-logo-text">
+                            <span>SHAMS School</span>
+                            <span>Private &amp; Excellence</span>
+                        </div>
+                    </div>
+                    <p>2024-yildan buyon yoshlarni yetishtirish, xarakter shakllantirish va global muvaffaqiyatga tayyorlashga bag'ishlangan nufuzli ta'lim muassasasi.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-btn" aria-label="Telegram">✈️</a>
+                        <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+                        <a href="#" class="social-btn" aria-label="Facebook">👤</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Tezkor Havolalar</h4>
+                    <ul>
+                        <li><a href="index.html">Asosiy</a></li>
+                        <li><a href="groups.html">Dasturlarimiz</a></li>
+                        <li><a href="teachers.html">O'qituvchilar</a></li>
+                        <li><a href="news.html">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.html">Qabul</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Yo'nalishlar</h4>
+                    <ul>
+                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.html">Robototexnika</a></li>
+                        <li><a href="groups.html">Aniq Fanlar</a></li>
+                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.html">Chet Tillari</a></li>
+                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Bog'lanish</h4>
+                    <div class="footer-contact-item">
+                        <span class="icon">📞</span>
+                        <span>+998 91 691 6699</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">✈️</span>
+                        <span>@shamsschool</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">📷</span>
+                        <span>@shams.school.official</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="icon">📍</span>
+                        <span>Farg'ona viloyati, Bag'dod tumani, Mo'jjal xalq banki yaqini</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
+                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/slider.js"></script>
+</body>
+
+</html>
