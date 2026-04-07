@@ -16,23 +16,32 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// PDO baza ulanishi
+// PDO baza ulanishi (Supabase PostgreSQL)
 function getDB(): PDO {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
 
-    $dir = dirname(DB_PATH);
-    if (!is_dir($dir)) mkdir($dir, 0755, true);
+    // Supabase Connection Config (IPv4 Pooler Tokyo Verified)
+    $host = 'aws-1-ap-northeast-1.pooler.supabase.com';
+    $port = '6543';
+    $dbname = 'postgres';
+    $user = 'postgres.efsjpqltnzayfpfpflmq';
+    $password = 'shams-edu2007';
 
     try {
-        $pdo = new PDO('sqlite:' . DB_PATH);
+        $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password";
+        $pdo = new PDO($dsn);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $pdo->exec('PRAGMA foreign_keys = ON;');
-        $pdo->exec('PRAGMA journal_mode = WAL;');
-        initDB($pdo);
     } catch (PDOException $e) {
-        die('Database xatosi: ' . $e->getMessage());
+        // Agar Postgres ulanishida xatolik bo'lsa (masalan, driver yoqilmagan), muvaqqat SQLite'ga qaytish:
+        try {
+            $pdo = new PDO('sqlite:' . DB_PATH);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch (PDOException $se) {
+            die('Database ulanish xatosi: ' . $e->getMessage());
+        }
     }
     return $pdo;
 }
