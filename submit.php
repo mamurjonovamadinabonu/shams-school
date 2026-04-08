@@ -40,11 +40,17 @@ try {
         "INSERT INTO applications (first_name, last_name, grade, direction, phone)
          VALUES (?, ?, ?, ?, ?)"
     );
-    $stmt->execute([$firstName, $lastName, $grade, $direction, $phone]);
+    if(!$stmt->execute([$firstName, $lastName, $grade, $direction, $phone])) {
+        throw new Exception("Inserting failed");
+    }
 } catch (Exception $e) {
-    // Fallback: faylga yozish
-    $logData = date('Y-m-d H:i:s') . " | $firstName | $lastName | $grade | $direction | $phone\n";
-    file_put_contents(__DIR__ . '/database/submissions.txt', $logData, FILE_APPEND | LOCK_EX);
+    // Fallback: faylga yozish (xatolikni bosish)
+    try {
+        $logData = date('Y-m-d H:i:s') . " | $firstName | $lastName | $grade | $direction | $phone\n";
+        @file_put_contents(__DIR__ . '/database/submissions.txt', $logData, FILE_APPEND | LOCK_EX);
+    } catch (Exception $e2) {
+        // Ignored
+    }
 }
 
 header("Location: contact.php?success=1");
