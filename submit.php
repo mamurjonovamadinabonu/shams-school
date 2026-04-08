@@ -33,25 +33,19 @@ if (!empty($errors)) {
     exit();
 }
 
-// Bazaga saqlash
-try {
-    $db = getDB();
-    $stmt = $db->prepare(
-        "INSERT INTO applications (first_name, last_name, grade, direction, phone)
-         VALUES (?, ?, ?, ?, ?)"
-    );
-    if(!$stmt->execute([$firstName, $lastName, $grade, $direction, $phone])) {
-        throw new Exception("Inserting failed");
-    }
-} catch (Exception $e) {
-    // Fallback: faylga yozish (xatolikni bosish)
-    try {
-        $logData = date('Y-m-d H:i:s') . " | $firstName | $lastName | $grade | $direction | $phone\n";
-        @file_put_contents(__DIR__ . '/database/submissions.txt', $logData, FILE_APPEND | LOCK_EX);
-    } catch (Exception $e2) {
-        // Ignored
-    }
-}
+// Bazaga saqlash (FIREBASE API)
+$appData = [
+    'first_name' => $firstName,
+    'last_name' => $lastName,
+    'grade' => $grade,
+    'direction' => $direction,
+    'phone' => $phone,
+    'status' => 'new',
+    'note' => '',
+    'created_at' => date('Y-m-d H:i:s')
+];
+
+$res = fb_request('/applications', 'POST', $appData);
 
 header("Location: contact.php?success=1");
 exit();

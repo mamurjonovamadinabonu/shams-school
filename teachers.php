@@ -1,7 +1,15 @@
 <?php
 require_once __DIR__ . '/admin/includes/config.php';
-$db = getDB();
-$teachersList = $db->query("SELECT * FROM teachers WHERE active=1 ORDER BY id DESC")->fetchAll();
+getDB();
+$teachersData = fb_request('/teachers') ?: [];
+$teachersList = [];
+foreach($teachersData as $k => $t) {
+    if(!empty($t['active'])) {
+        $t['id'] = $k;
+        $teachersList[] = $t;
+    }
+}
+$teachersList = array_reverse($teachersList);
 ?>
 <!DOCTYPE html>
 <html lang="uz">

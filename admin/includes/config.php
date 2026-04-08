@@ -1,9 +1,9 @@
 <?php
 // =============================================
-//  SHAMS School — Backend Config
+//  SHAMS School — Backend Config (FIREBASE)
 // =============================================
 
-define('DB_PATH', __DIR__ . '/../../database/shams.db');
+define('FIREBASE_URL', 'https://shams-school-84b9f-default-rtdb.firebaseio.com/');
 define('ADMIN_USER', 'admin');
 define('ADMIN_PASS', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); // "password"
 define('SESSION_NAME', 'shams_admin');
@@ -16,130 +16,70 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// PDO baza ulanishi (Supabase PostgreSQL)
-function getDB(): PDO {
-    static $pdo = null;
-    if ($pdo !== null) return $pdo;
-
-    // Supabase Connection Config (IPv4 Pooler Tokyo Verified)
-    $host = 'aws-1-ap-northeast-1.pooler.supabase.com';
-    $port = '6543';
-    $dbname = 'postgres';
-    $user = 'postgres.efsjpqltnzayfpfpflmq';
-    $password = 'shams-edu2007';
-
-    try {
-        $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password";
-        $pdo = new PDO($dsn);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        // Agar Postgres ulanishida xatolik bo'lsa (masalan, driver yoqilmagan), muvaqqat SQLite'ga qaytish:
-        try {
-            $pdo = new PDO('sqlite:' . DB_PATH);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (PDOException $se) {
-            die('Database ulanish xatosi: ' . $e->getMessage());
-        }
+/**
+ * Firebase bilan ishlash uchun asosiy funksiya (cURL orqali)
+ */
+function fb_request($path, $method = 'GET', $data = null) {
+    $url = FIREBASE_URL . ltrim($path, '/') . '.json';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // SSL check ni o'chirish
+    
+    if ($method === 'POST') {
+        curl_setopt($ch, CURLOPT_POST, true);
+        if ($data !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    } elseif ($method === 'PUT') {
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        if ($data !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    } elseif ($method === 'PATCH') {
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        if ($data !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    } elseif ($method === 'DELETE') {
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
     }
-    return $pdo;
+    
+    $response = curl_exec($ch);
+    curl_close($ch);
+    
+    $resData = json_decode($response, true);
+    return $resData;
 }
 
-// Jadvallarni yaratish
-function initDB(PDO $pdo): void {
-    $pdo->exec("
-        CREATE TABLE IF NOT EXISTS applications (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            first_name  TEXT NOT NULL,
-            last_name   TEXT NOT NULL,
-            grade       TEXT NOT NULL,
-            direction   TEXT NOT NULL,
-            phone       TEXT NOT NULL,
-            status      TEXT DEFAULT 'new',
-            note        TEXT DEFAULT '',
-            created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-
-        CREATE TABLE IF NOT EXISTS teachers (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            name        TEXT NOT NULL,
-            subject     TEXT NOT NULL,
-            experience  TEXT,
-            bio         TEXT,
-            photo       TEXT DEFAULT '',
-            email       TEXT DEFAULT '',
-            active      INTEGER DEFAULT 1,
-            created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-
-        CREATE TABLE IF NOT EXISTS news (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            title       TEXT NOT NULL,
-            content     TEXT NOT NULL,
-            category    TEXT DEFAULT 'General',
-            image       TEXT DEFAULT '',
-            published   INTEGER DEFAULT 1,
-            created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-
-        CREATE TABLE IF NOT EXISTS discounts (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            title       TEXT NOT NULL,
-            description TEXT NOT NULL,
-            percent     INTEGER DEFAULT 0,
-            active      INTEGER DEFAULT 1,
-            expires_at  DATE,
-            created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-
-        CREATE TABLE IF NOT EXISTS settings (
-            key         TEXT PRIMARY KEY,
-            value       TEXT NOT NULL,
-            updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-    ");
-
-    // Namuna ma'lumotlar
-    $count = $pdo->query("SELECT COUNT(*) FROM teachers")->fetchColumn();
-    if ($count == 0) {
-        $pdo->exec("
-            INSERT INTO teachers (name, subject, experience, bio) VALUES
-            ('Aziza Karimova', 'Matematika', '12 yil', 'Matematika olimpiadasi g''olibi tayyorlovchi ustoz.'),
-            ('Bobur Toshmatov', 'Fizika', '8 yil', 'Tajribali fizika o''qituvchisi va ilmiy tadqiqotchi.'),
-            ('Dilnoza Yusupova', 'Ingliz Tili', '10 yil', 'IELTS 8.5 ball egasi, ingliz tili mutaxassisi.'),
-            ('Sardor Nazarov', 'Robototexnika va IT', '6 yil', 'Robototexnika va dasturlash bo''yicha yetakchi mutaxassis.'),
-            ('Malika Rahimova', 'Biologiya', '9 yil', 'Biologiya va kimyo fanlaridan tajribali pedagog.')
-        ");
-
-        $pdo->exec("
-            INSERT INTO news (title, content, category) VALUES
-            ('SHAMS School 2025-2026 o''quv yiliga qabul boshladi', '2025-2026 o''quv yiliga qabul arizalari qabul qilinmoqda. 1-4 sinflar uchun imtiyozlar mavjud.', 'Announcement'),
-            ('Robototexnika musobaqasida birinchi o''rin', 'SHAMS maktabi o''quvchilari respublika robototexnika musobaqasida birinchi o''rinni egalladi.', 'Achievement'),
-            ('Yangi Smart Darsxona ochildi', 'Maktabimizda zamonaviy texnologiyalar bilan jihozlangan yangi smart darsxona faoliyatini boshladi.', 'School News')
-        ");
-
-        $pdo->exec("
-            INSERT INTO discounts (title, description, percent, expires_at) VALUES
-            ('1-4 sinf imtiyozi', 'Boshlang''ich sinflarga o''quvchilar uchun maxsus chegirma', 20, '2025-09-01'),
-            ('Aka-uka/Opa-singil chegirmasi', 'Ikki va undan ortiq farzand o''qisa chegirma', 25, NULL),
-            ('Erta ro''yxatdan o''tish', 'May oyi oxirigacha ro''yxatdan o''tganlar uchun', 15, '2025-05-31')
-        ");
-
-        $pdo->exec("
-            INSERT INTO settings (key, value) VALUES
-            ('school_name', 'SHAMS Private School'),
-            ('phone', '+998 71 200 30 40'),
-            ('address', '123 Education Avenue, Tashkent'),
-            ('telegram', '@shamsschool'),
-            ('instagram', '@shams.school.official'),
-            ('total_students', '1200'),
-            ('total_teachers', '60'),
-            ('years_experience', '15'),
-            ('admission_rate', '98')
-        ");
+// Boshlang'ich datalarni Firebase'ga yuklash
+function initFirebase() {
+    $teachers = fb_request('/teachers');
+    // Agar baza bo'm-bo'sh bo'lsa (yangi API)
+    if (empty($teachers)) {
+        $sampleTeachers = [
+            't1' => ['name' => 'Asrorjon Homidjonov', 'subject' => 'Ingliz tili - IELTS', 'experience' => '', 'bio' => 'Grammatika, IELTS/CEFR/SAT, DTM', 'photo' => 'https://ui-avatars.com/api/?name=Asrorjon+Homidjonov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')],
+            't2' => ['name' => 'Farhodjon Ahmedov', 'subject' => 'Ingliz tili', 'experience' => '', 'bio' => 'CEFR va IELTS, DTM, Grammatika', 'photo' => 'https://ui-avatars.com/api/?name=Farhodjon+Ahmedov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')],
+            't3' => ['name' => 'Shaxzodaxon Xamroliyeva', 'subject' => 'Ingliz tili', 'experience' => '', 'bio' => 'Grammatika, DTM, Milliy sertifikat', 'photo' => 'https://ui-avatars.com/api/?name=Shaxzodaxon+Xamroliyeva&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')],
+            't4' => ['name' => 'Jamshidbek G\'ulomqodirov', 'subject' => 'Matematika', 'experience' => '', 'bio' => 'Matematika, DTM, Milliy sertifikat', 'photo' => 'https://ui-avatars.com/api/?name=Jamshidbek+G\'ulomqodirov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]
+        ];
+        fb_request('/teachers', 'PUT', $sampleTeachers);
+    }
+    
+    $settings = fb_request('/settings');
+    if (empty($settings)) {
+        $sampleSettings = [
+            'school_name' => 'SHAMS Private School',
+            'phone' => '+998 91 691 6699',
+            'address' => 'Farg\'ona viloyati, Bag\'dod tumani',
+            'telegram' => '@shamsschool',
+            'instagram' => '@shams.school.official',
+            'total_students' => '1200',
+            'total_teachers' => '18',
+            'years_experience' => '15',
+            'admission_rate' => '98'
+        ];
+        fb_request('/settings', 'PUT', $sampleSettings);
     }
 }
+
+// Eskicha PDO moslashuvidan xalos qilish
+function getDB() { return null; } 
+function initDB($pdo) { initFirebase(); }
 
 // Auth tekshiruv
 function requireAuth(): void {

@@ -1,7 +1,13 @@
 <?php
 require_once __DIR__ . '/admin/includes/config.php';
-$db = getDB();
-$discounts = $db->query("SELECT * FROM discounts WHERE active=1 ORDER BY id DESC")->fetchAll();
+getDB();
+$discData = fb_request('/discounts') ?: [];
+$discounts = [];
+foreach($discData as $k => $d) {
+    if(!empty($d['active'])) {
+        $discounts[] = $d;
+    }
+}
 $sRows = $db->query("SELECT key, value FROM settings")->fetchAll();
 $settings = [];
 foreach($sRows as $r) { $settings[$r['key']] = $r['value']; }

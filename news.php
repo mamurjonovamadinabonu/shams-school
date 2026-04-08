@@ -1,7 +1,15 @@
 <?php
 require_once __DIR__ . '/admin/includes/config.php';
-$db = getDB();
-$newsList = $db->query("SELECT * FROM news WHERE published=1 ORDER BY id DESC")->fetchAll();
+getDB();
+$newsData = fb_request('/news') ?: [];
+$newsList = [];
+foreach($newsData as $k => $n) {
+    if(!empty($n['published'])) {
+        $n['id'] = $k;
+        $newsList[] = $n;
+    }
+}
+$newsList = array_reverse($newsList);
 ?>
 ﻿<!DOCTYPE html>
 <html lang="uz">
