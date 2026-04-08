@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 
 <head>
@@ -87,56 +87,65 @@
         }
 
         .teacher-info {
-            padding: 18px 14px;
-        }
-
-        .teacher-subject {
-            display: inline-block;
-            background: var(--light);
-            color: var(--primary);
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-bottom: 8px;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            height: calc(100% - 180px);
         }
 
         .teacher-name {
-            font-size: 0.95rem;
-            font-weight: 800;
+            font-size: 1.15rem;
+            font-weight: 900;
             color: var(--primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            line-height: 1.3;
         }
 
-        .teacher-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .teacher-exp {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            margin-top: 10px;
-            font-size: 0.72rem;
-            color: var(--accent);
+        .teacher-subject {
+            color: #E53935;
+            font-size: 0.85rem;
             font-weight: 700;
+            margin-bottom: 14px;
         }
 
-        @media (max-width: 1100px) {
+        .teacher-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .teacher-tag {
+            background: #ffe9e9;
+            color: #E53935;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        @media (max-width: 1200px) {
             .teachers-grid { grid-template-columns: repeat(4, 1fr); }
         }
 
-        @media (max-width: 750px) {
-            .teachers-grid { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 992px) {
+            .teachers-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .teachers-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .teacher-photo { height: 160px; }
+            .teacher-name { font-size: 1.05rem; }
+            .teacher-subject { font-size: 0.8rem; }
+            .teacher-tag { font-size: 0.7rem; padding: 5px 12px; }
         }
 
         @media (max-width: 500px) {
-            .teachers-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .teachers-grid { grid-template-columns: 1fr; gap: 16px; }
+            .teacher-photo { height: 200px; }
         }
     </style>
 </head>
@@ -185,331 +194,232 @@
                 <p class="section-subtitle" style="margin:0 auto;">SHAMS'dagi har bir o'qituvchi chuqur bilim, amaliy tajriba va haqiqiy ishtiyoq bilan dars beradi.</p>
             </div>
 
-            <div class="teachers-grid" id="teachersGrid">
-                <!-- Qator 1 -->
+                        <div class="teachers-grid" id="teachersGrid">
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Akbar Toshmatov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Asrorjon+Homidjonov&background=e3f2fd&color=0c2b4e&size=200" alt="Asrorjon Homidjonov">
                     </div>
                     <div class="teacher-info">
-                        <span class="teacher-subject">IT / Dasturlash</span>
-                        <p class="teacher-name">Akbar Toshmatov</p>
-                        <p class="teacher-desc">Python va Web dasturlash mutaxassisi. 8 yillik sanoat tajribasiga ega sobiq dasturchi.</p>
-                        <p class="teacher-exp">⭐ 10 yil tajriba</p>
+                        <p class="teacher-name">ASRORJON HOMIDJONOV</p>
+                        <span class="teacher-subject">Ingliz tili - IELTS</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Grammatika</span>
+                            <span class="teacher-tag">IELTS/CEFR/SAT</span>
+                            <span class="teacher-tag">DTM</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Nilufar Karimova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Farhodjon+Ahmedov&background=e3f2fd&color=0c2b4e&size=200" alt="Farhodjon Ahmedov">
                     </div>
                     <div class="teacher-info">
+                        <p class="teacher-name">FARHODJON AHMEDOV</p>
+                        <span class="teacher-subject">Ingliz tili</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">CEFR va IELTS</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Grammatika</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teacher-card reveal">
+                    <div class="teacher-photo">
+                        <img src="https://ui-avatars.com/api/?name=Shaxzodaxon+Xamroliyeva&background=e3f2fd&color=0c2b4e&size=200" alt="Shaxzodaxon Xamroliyeva">
+                    </div>
+                    <div class="teacher-info">
+                        <p class="teacher-name">SHAXZODAXON XAMROLIYEVA</p>
+                        <span class="teacher-subject">Ingliz tili</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Grammatika</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teacher-card reveal">
+                    <div class="teacher-photo">
+                        <img src="https://ui-avatars.com/api/?name=Jamshidbek+G'ulomqodirov&background=e3f2fd&color=0c2b4e&size=200" alt="Jamshidbek G'ulomqodirov">
+                    </div>
+                    <div class="teacher-info">
+                        <p class="teacher-name">JAMSHIDBEK G'ULOMQODIROV</p>
                         <span class="teacher-subject">Matematika</span>
-                        <p class="teacher-name">Nilufar Karimova</p>
-                        <p class="teacher-desc">Milliy matematika olimpiadasi murabbiyasi. MDU magistri. Algebrani qiziqarli qilishga ixtisoslashgan.</p>
-                        <p class="teacher-exp">⭐ 12 yil tajriba</p>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Matematika</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Jasur Rahimov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Hasanjon+Domla+Ismoilov&background=e3f2fd&color=0c2b4e&size=200" alt="Hasanjon Domla Ismoilov">
                     </div>
                     <div class="teacher-info">
-                        <span class="teacher-subject">Robototexnika</span>
-                        <p class="teacher-name">Jasur Rahimov</p>
-                        <p class="teacher-desc">Robototexnika muhandisi va murabbiyi. Jamoalarni 3 ta xalqaro chempionat medaliga olib borgan.</p>
-                        <p class="teacher-exp">⭐ 8 yil tajriba</p>
+                        <p class="teacher-name">HASANJON DOMLA ISMOILOV</p>
+                        <span class="teacher-subject">Matematika</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Matematika</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dilnoza Yusupova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Ergashev+Azizbek&background=e3f2fd&color=0c2b4e&size=200" alt="Ergashev Azizbek">
                     </div>
                     <div class="teacher-info">
-                        <span class="teacher-subject">Ingliz Tili</span>
-                        <p class="teacher-name">Dilnoza Yusupova</p>
-                        <p class="teacher-desc">CELTA sertifikatlangan ingliz tili o'qituvchisi. IELTS 9.0 ball egasi. Kommunikativ o'qitishga ishtiyoqmand.</p>
-                        <p class="teacher-exp">⭐ 9 yil tajriba</p>
+                        <p class="teacher-name">ERGASHEV AZIZBEK</p>
+                        <span class="teacher-subject">Matematika</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Matematika</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="Bobur Nazarov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Iqboljon+Mamasoliyev&background=e3f2fd&color=0c2b4e&size=200" alt="Iqboljon Mamasoliyev">
                     </div>
                     <div class="teacher-info">
+                        <p class="teacher-name">IQBOLJON MAMASOLIYEV</p>
                         <span class="teacher-subject">Fizika</span>
-                        <p class="teacher-name">Bobur Nazarov</p>
-                        <p class="teacher-desc">Nazariy fizika bo'yicha PhD talabasi. Murakkab fizika qongularini qiziqarli qilib o'rgatadi.</p>
-                        <p class="teacher-exp">⭐ 7 yil tajriba</p>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Fizika</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Shoira Mirzaeva">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Iqboljon+Kamoliddinov&background=e3f2fd&color=0c2b4e&size=200" alt="Iqboljon Kamoliddinov">
                     </div>
                     <div class="teacher-info">
+                        <p class="teacher-name">IQBOLJON KAMOLIDDINOV</p>
                         <span class="teacher-subject">Kimyo</span>
-                        <p class="teacher-name">Shoira Mirzaeva</p>
-                        <p class="teacher-desc">Laboratoriya asosidagi o'qitish mutaxassisi. Tajribalari kimyoni ko'rgazmali va hayajonli qiladi.</p>
-                        <p class="teacher-exp">⭐ 11 yil tajriba</p>
-                    </div>
-                </div>
-
-                <!-- Qator 2 -->
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Firdavs Umarov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Kimyo</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
                         </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">Geografiya</span>
-                        <p class="teacher-name">Firdavs Umarov</p>
-                        <p class="teacher-desc">Sayohatchri geograf. Sinf muhokamalariga global xabardorlik olib keladi.</p>
-                        <p class="teacher-exp">⭐ 6 yil tajriba</p>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Madina Xasanova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Nargiza+Hasanova&background=e3f2fd&color=0c2b4e&size=200" alt="Nargiza Hasanova">
                     </div>
                     <div class="teacher-info">
+                        <p class="teacher-name">NARGIZA HASANOVA</p>
+                        <span class="teacher-subject">Rus tili</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Suhbatlashuv</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teacher-card reveal">
+                    <div class="teacher-photo">
+                        <img src="https://ui-avatars.com/api/?name=Bahtiyor+Abdurazzoqov&background=e3f2fd&color=0c2b4e&size=200" alt="Bahtiyor Abdurazzoqov">
+                    </div>
+                    <div class="teacher-info">
+                        <p class="teacher-name">BAHTIYOR ABDURAZZOQOV</p>
                         <span class="teacher-subject">Biologiya</span>
-                        <p class="teacher-name">Madina Xasanova</p>
-                        <p class="teacher-desc">Biotexnologiya tadqiqotchisi va biologiya o'qituvchisi. Maktab ekologiya to'garagini boshqaradi.</p>
-                        <p class="teacher-exp">⭐ 8 yil tajriba</p>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Biologiya</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Sardor Begmatov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Ilyosbek+G'aniyev&background=e3f2fd&color=0c2b4e&size=200" alt="Ilyosbek G'aniyev">
                     </div>
                     <div class="teacher-info">
-                        <span class="teacher-subject">Nemis Tili</span>
-                        <p class="teacher-name">Sardor Begmatov</p>
-                        <p class="teacher-desc">C2 sertifikatlangan nemis tili o'qituvchisi. Berlinda ta'lim olgan. O'quvchilarni DaF imtihonlariga tayyorlaydi.</p>
-                        <p class="teacher-exp">⭐ 7 yil tajriba</p>
+                        <p class="teacher-name">ILYOSBEK G'ANIYEV</p>
+                        <span class="teacher-subject">Biologiya</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Biologiya</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Zulfiya Eshmatova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Nodirbek+Rahmonnazarov&background=e3f2fd&color=0c2b4e&size=200" alt="Nodirbek Rahmonnazarov">
                     </div>
                     <div class="teacher-info">
-                        <span class="teacher-subject">Adabiyot</span>
-                        <p class="teacher-name">Zulfiya Eshmatova</p>
-                        <p class="teacher-desc">Nashr etilgan muallif va adabiyot o'qituvchisi. Har bir o'quvchida hikoya sevgisini uyg'otadi.</p>
-                        <p class="teacher-exp">⭐ 14 yil tajriba</p>
+                        <p class="teacher-name">NODIRBEK RAHMONNAZAROV</p>
+                        <span class="teacher-subject">Tarix - Huquq</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Tarix</span>
+                            <span class="teacher-tag">Huquq</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/63.jpg" alt="Alisher Hamidov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Teshaboyeva+Umidaxon&background=e3f2fd&color=0c2b4e&size=200" alt="Teshaboyeva Umidaxon">
                     </div>
                     <div class="teacher-info">
+                        <p class="teacher-name">TESHABOYEVA UMIDAXON</p>
+                        <span class="teacher-subject">Ona tili - Adabiyot</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Ona tili</span>
+                            <span class="teacher-tag">Adabiyot</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="teacher-card reveal">
+                    <div class="teacher-photo">
+                        <img src="https://ui-avatars.com/api/?name=Xoldarova+Diloromxon&background=e3f2fd&color=0c2b4e&size=200" alt="Xoldarova Diloromxon">
+                    </div>
+                    <div class="teacher-info">
+                        <p class="teacher-name">XOLDAROVA DILOROMXON</p>
                         <span class="teacher-subject">Tarix</span>
-                        <p class="teacher-name">Alisher Hamidov</p>
-                        <p class="teacher-desc">Tarix fanlari doktori. O'tmish voqealarni hozirgi davr bilan bog'lash ishtiyoqida.</p>
-                        <p class="teacher-exp">⭐ 9 yil tajriba</p>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Tarix</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="teacher-card reveal">
                     <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/77.jpg" alt="Maftuna Sodiqova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
+                        <img src="https://ui-avatars.com/api/?name=Nasriddinova+Gulnoza&background=e3f2fd&color=0c2b4e&size=200" alt="Nasriddinova Gulnoza">
                     </div>
                     <div class="teacher-info">
-                        <span class="teacher-subject">IT / Ma'lumotlar Fani</span>
-                        <p class="teacher-name">Maftuna Sodiqova</p>
-                        <p class="teacher-desc">Ma'lumotlar olimi bo'lib o'qituvchilikka o'tgan. Ilg'or o'quvchilarga mashinaviy o'qishni o'rgatadi.</p>
-                        <p class="teacher-exp">⭐ 5 yil tajriba</p>
-                    </div>
-                </div>
-
-                <!-- Qator 3 -->
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Nodir Qodirov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
+                        <p class="teacher-name">NASRIDDINOVA GULNOZA</p>
+                        <span class="teacher-subject">Ona tili - Adabiyot</span>
+                        <div class="teacher-tags">
+                            <span class="teacher-tag">Ona tili</span>
+                            <span class="teacher-tag">Adabiyot</span>
+                            <span class="teacher-tag">DTM</span>
+                            <span class="teacher-tag">Milliy sertifikat</span>
                         </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">Jismoniy Tarbiya</span>
-                        <p class="teacher-name">Nodir Qodirov</p>
-                        <p class="teacher-desc">Sobiq milliy basketbol o'yinchisi. Maktab jamoalarini murabbiylik qiladi va sog'lom turmush tarzini targ'ib qiladi.</p>
-                        <p class="teacher-exp">⭐ 6 yil tajriba</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/11.jpg" alt="Gulbahor Tursunova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">San'at va Dizayn</span>
-                        <p class="teacher-name">Gulbahor Tursunova</p>
-                        <p class="teacher-desc">Professional dizayner va san'at o'qituvchisi. Raqamli dizayn vositalarini dars dasturiga qo'shadi.</p>
-                        <p class="teacher-exp">⭐ 8 yil tajriba</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Otabek Yuldashev">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">Iqtisodiyot</span>
-                        <p class="teacher-name">Otabek Yuldashev</p>
-                        <p class="teacher-desc">Konsulting tajribasiga ega MBA bitiruvchisi. O'quvchilarga moliyaviy savodxonlik ko'nikmalarini o'rgatadi.</p>
-                        <p class="teacher-exp">⭐ 7 yil tajriba</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/99.jpg" alt="Hulkar Baxtiyorova">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">Fransuz Tili</span>
-                        <p class="teacher-name">Hulkar Baxtiyorova</p>
-                        <p class="teacher-desc">DALF C1 sertifikatlangan. Parijda 3 yil yashagan. Har bir darsga fransuz madaniyatini olib kiradi.</p>
-                        <p class="teacher-exp">⭐ 10 yil tajriba</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/men/34.jpg" alt="Sherzod Mamatov">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">Robototexnika / Elektronika</span>
-                        <p class="teacher-name">Sherzod Mamatov</p>
-                        <p class="teacher-desc">Elektronika muhandisi va ixtirochi. 2 ta patentga ega va milliy robototexnika jamoasiga murabbiylik qiladi.</p>
-                        <p class="teacher-exp">⭐ 12 yil tajriba</p>
-                    </div>
-                </div>
-
-                <div class="teacher-card reveal">
-                    <div class="teacher-photo">
-                        <img src="https://randomuser.me/api/portraits/women/60.jpg" alt="Kamola Ergasheva">
-                        <div class="teacher-overlay">
-                            <div class="teacher-socials">
-                                <a href="#" class="teacher-social-btn">📧</a>
-                                <a href="#" class="teacher-social-btn">✈️</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="teacher-info">
-                        <span class="teacher-subject">Psixologiya</span>
-                        <p class="teacher-name">Kamola Ergasheva</p>
-                        <p class="teacher-desc">Maktab maslahatchisi va psixologiya o'qituvchisi. O'quvchilarning farovonligi va akademik barqarorligini qo'llab-quvvatlaydi.</p>
-                        <p class="teacher-exp">⭐ 9 yil tajriba</p>
                     </div>
                 </div>
             </div>
