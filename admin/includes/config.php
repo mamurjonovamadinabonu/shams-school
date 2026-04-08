@@ -3,7 +3,7 @@
 //  SHAMS School — Backend Config (FIREBASE)
 // =============================================
 
-define('FIREBASE_URL', 'https://shams-school-84b9f-default-rtdb.firebaseio.com/');
+define('FIREBASE_URL', 'https://shams-school-84b9f-default-rtdb.firebaseio.com/'); // TO DO: Update this if region is different!
 define('ADMIN_USER', 'admin');
 define('ADMIN_PASS', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); // "password"
 define('SESSION_NAME', 'shams_admin');
@@ -24,7 +24,8 @@ function fb_request($path, $method = 'GET', $data = null) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // SSL check ni o'chirish
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5); // TIZIM QOTIB QOLMASLIGI UCHUN!
     
     if ($method === 'POST') {
         curl_setopt($ch, CURLOPT_POST, true);
@@ -42,7 +43,7 @@ function fb_request($path, $method = 'GET', $data = null) {
     $response = curl_exec($ch);
     curl_close($ch);
     
-    $resData = json_decode($response, true);
+    $resData = json_decode($response ?: '{}', true);
     return $resData;
 }
 
