@@ -221,7 +221,18 @@ $teachersList = $db->query("SELECT * FROM teachers WHERE active=1 ORDER BY id DE
                     <div class="teacher-info">
                         <span class="teacher-subject"><?= htmlspecialchars($teacher['subject']) ?></span>
                         <p class="teacher-name"><?= htmlspecialchars($teacher['name']) ?></p>
-                        <p class="teacher-desc"><?= htmlspecialchars($teacher['bio']) ?></p>
+                        <?php if ($teacher['bio']): ?>
+                        <div class="teacher-tags" style="margin-top:10px;">
+                            <?php 
+                                $tags = explode(',', $teacher['bio']);
+                                foreach($tags as $t) {
+                                    $t = trim($t);
+                                    if(empty($t)) continue;
+                                    echo '<span class="teacher-tag">'.htmlspecialchars($t).'</span>';
+                                }
+                            ?>
+                        </div>
+                        <?php endif; ?>
                         <?php if ($teacher['experience']): ?>
                         <p class="teacher-exp">⭐ <?= htmlspecialchars($teacher['experience']) ?></p>
                         <?php endif; ?>
