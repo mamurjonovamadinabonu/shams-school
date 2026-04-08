@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/admin/includes/config.php';
+$db = getDB();
+$newsList = $db->query("SELECT * FROM news WHERE published=1 ORDER BY id DESC")->fetchAll();
+?>
 ﻿<!DOCTYPE html>
 <html lang="uz">
 
@@ -102,7 +107,7 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="index.html" class="nav-logo">
+            <a href="index.php" class="nav-logo">
                 <div class="nav-logo-icon">S</div>
                 <div class="nav-logo-text">
                     <span>SHAMS Maktabi</span>
@@ -110,11 +115,11 @@
                 </div>
             </a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Asosiy</a></li>
-                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
-                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
-                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
-                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+                <li><a href="index.php" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.php" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.php" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.php" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.php" class="nav-link">Bog'lanish</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Menyuni ochish">
                 <span></span><span></span><span></span>
@@ -128,7 +133,7 @@
             <h1>Maktab Yangiliklari va Tadbirlari</h1>
             <p>SHAMS maktabining jonli hayotini kashf eting — yutuqlarni nishonlang, kelgusi tadbirlarni bilib oling va hamjamiyatimiz bilan bog'liq qoling.</p>
             <div class="breadcrumb">
-                <a href="index.html">Asosiy</a>
+                <a href="index.php">Asosiy</a>
                 <span class="sep">/</span>
                 <span>Yangiliklar</span>
             </div>
@@ -143,83 +148,29 @@
             </div>
 
             <div class="news-grid">
-                <!-- Maqola 1 -->
+                <?php foreach($newsList as $news): ?>
                 <article class="news-article reveal">
                     <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800&q=80"
-                            alt="SHAMS Robototexnika jamoasi milliy chempionatda oltin medal qozondi">
-                        <span class="news-category">🏆 Yutuq</span>
+                        <?php if ($news['image']): ?>
+                            <img src="<?= htmlspecialchars($news['image']) ?>" alt="<?= htmlspecialchars($news['title']) ?>">
+                        <?php else: ?>
+                            <div style="width:100%;height:100%;min-height:300px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:var(--primary-dark);font-size:2rem;font-weight:bold;">
+                                SHAMS
+                            </div>
+                        <?php endif; ?>
+                        <span class="news-category"><?= htmlspecialchars($news['category']) ?></span>
                     </div>
                     <div class="news-body">
                         <div class="news-meta">
-                            <span class="news-date">📅 18-fevral, 2025</span>
-                            <span class="news-author">Maktab Ma'muriyati</span>
+                            <span class="news-date">📅 <?= date('d.m.Y', strtotime($news['created_at'])) ?></span>
+                            <span class="news-author">SHAMS Ma'muriyati</span>
                         </div>
-                        <h2>SHAMS Robototexnika Jamoasi Milliy Chempionatda Oltin Medal Qozondi!</h2>
-                        <p>Bizning fidoyi Robototexnika jamoamiz — "SHAMS Alpha" — Toshkentda o'tkazilgan 2025-yilgi Milliy Robototexnika Olimpiadasida birinchi o'rinni egalladi. Butun O'zbekiston bo'ylab 48 ta maktab bilan raqobatlashgan 9-10 sinf o'quvchilari guruhi g'alaba qozondi.
-                            <br><br>
-                            O'z-o'zidan loyihalashtirilgan avtonom robot aniqligi va ob'ektlarni saralash qobiliyati bilan hakamlarni maftun etdi. Bu g'alaba bizning to'rtinchi ketma-ket milliy chempionligimiz bo'lib, robototexnika dasturimiz va o'quvchilarimizning cheksiz mehnatidan dalolat beradi.
-                        </p>
-                        <div class="news-tags">
-                            <span class="news-tag">Robototexnika</span>
-                            <span class="news-tag">Chempionat</span>
-                            <span class="news-tag">Oltin Medal</span>
-                        </div>
+                        <h2><?= htmlspecialchars($news['title']) ?></h2>
+                        <p><?= nl2br(htmlspecialchars(mb_substr($news['content'], 0, 150))) ?>...</p>
                         <a href="#" class="read-more">To'liq o'qish →</a>
                     </div>
                 </article>
-
-                <!-- Maqola 2 -->
-                <article class="news-article reveal">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80"
-                            alt="SHAMS talabalari Koreya universitetlariga to'liq stipendiya yutib oldi">
-                        <span class="news-category">🌍 Xorijda O'qish</span>
-                    </div>
-                    <div class="news-body">
-                        <div class="news-meta">
-                            <span class="news-date">📅 30-yanvar, 2025</span>
-                            <span class="news-author">Qabul Bo'limi</span>
-                        </div>
-                        <h2>12 SHAMS Bitiruvchisi Koreya'ning Eng Yaxshi Universitetlariga To'liq Stipendiya Qozondi</h2>
-                        <p>Bu o'quv yili bizning Xorijda O'qish dasturimiz uchun tarixiy bo'ldi. O'n ikki nafar 11-sinf bitiruvchimiz KAIST, Seul Milliy Universiteti va Yonsei Universiteti kabi Janubiy Koreyaning yetakchi universitetlariga to'liq davlat stipendiyalari oldi.
-                            <br><br>
-                            9-sinfdan Xorijda O'qish yo'nalishiga yozilgan bu o'quvchilar intensiv Koreys va Ingliz tili dasturidan, universitet ariza yo'riqnomasidan va xalqaro imtihon tayyorgarligidan foydalandilar. Bu rekord natija SHAMS'ning O'zbekistondagi global oliy ta'limga yetakchi yo'l sifatidagi obro'sini yanada mustahkamladi.
-                        </p>
-                        <div class="news-tags">
-                            <span class="news-tag">Xorijda O'qish</span>
-                            <span class="news-tag">Stipendiyalar</span>
-                            <span class="news-tag">Janubiy Koreya</span>
-                        </div>
-                        <a href="#" class="read-more">To'liq o'qish →</a>
-                    </div>
-                </article>
-
-                <!-- Maqola 3 -->
-                <article class="news-article reveal">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80"
-                            alt="SHAMS'da yangi IT Innovatsiya Laboratoriyasi ochildi">
-                        <span class="news-category">🚀 Innovatsiya</span>
-                    </div>
-                    <div class="news-body">
-                        <div class="news-meta">
-                            <span class="news-date">📅 10-yanvar, 2025</span>
-                            <span class="news-author">Direktor Idorasi</span>
-                        </div>
-                        <h2>SHAMS Zamonaviy IT Innovatsiya Laboratoriyasi va Kodlash Markazini Ochdi</h2>
-                        <p>SHAMS Xususiy Maktabi yangi IT Innovatsiya Laboratoriyasini rasmiy ravishda ochdi — 120 ta yuqori unumdorli ish stantsiyalari, maxsus sun'iy intellekt tadqiqot burchagi, 3D printerlar va IoT ishlab chiqish zonasi bilan jihozlangan 600 m² makon.
-                            <br><br>
-                            Yetakchi texnologiya kompaniyasi hamkorligi bilan moliyalashtirilgan laboratoriyada haftalik dasturlash kurslari, xakaton musobaqalari va soha mutaxassislari bilan mehmon ma'ruzalari o'tkaziladi. 5-sinfdan yuqori barcha o'quvchilar rejalashtirilgan tarzda foydalana oladi.
-                        </p>
-                        <div class="news-tags">
-                            <span class="news-tag">IT</span>
-                            <span class="news-tag">Innovatsiya</span>
-                            <span class="news-tag">Yangi Inshoot</span>
-                        </div>
-                        <a href="#" class="read-more">To'liq o'qish →</a>
-                    </div>
-                </article>
+                <?php endforeach; ?>
             </div>
 
             <!-- Yangiliklar obunasi -->
@@ -259,22 +210,22 @@
                 <div class="footer-col">
                     <h4>Tezkor Havolalar</h4>
                     <ul>
-                        <li><a href="index.html">Asosiy</a></li>
-                        <li><a href="groups.html">Dasturlarimiz</a></li>
-                        <li><a href="teachers.html">O'qituvchilar</a></li>
-                        <li><a href="news.html">Maktab Yangiliklari</a></li>
-                        <li><a href="contact.html">Qabul</a></li>
+                        <li><a href="index.php">Asosiy</a></li>
+                        <li><a href="groups.php">Dasturlarimiz</a></li>
+                        <li><a href="teachers.php">O'qituvchilar</a></li>
+                        <li><a href="news.php">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.php">Qabul</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Yo'nalishlar</h4>
                     <ul>
-                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
-                        <li><a href="groups.html">Robototexnika</a></li>
-                        <li><a href="groups.html">Aniq Fanlar</a></li>
-                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
-                        <li><a href="groups.html">Chet Tillari</a></li>
-                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                        <li><a href="groups.php">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.php">Robototexnika</a></li>
+                        <li><a href="groups.php">Aniq Fanlar</a></li>
+                        <li><a href="groups.php">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.php">Chet Tillari</a></li>
+                        <li><a href="groups.php">Xorijda O'qish</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -295,7 +246,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
-                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+                <p>❤️ bilan yaratildi — <a href="index.php">SHAMS Maktabi</a> uchun</p>
             </div>
         </div>
     </footer>

@@ -293,7 +293,7 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="index.html" class="nav-logo">
+            <a href="index.php" class="nav-logo">
                 <div class="nav-logo-icon">S</div>
                 <div class="nav-logo-text">
                     <span>SHAMS Maktabi</span>
@@ -301,11 +301,11 @@
                 </div>
             </a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Asosiy</a></li>
-                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
-                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
-                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
-                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+                <li><a href="index.php" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.php" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.php" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.php" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.php" class="nav-link">Bog'lanish</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Menyuni ochish">
                 <span></span><span></span><span></span>
@@ -319,7 +319,7 @@
             <h1>Biz bilan Bog'laning</h1>
             <p>SHAMS oilasiga qo'shilishga tayyormisiz? Ro'yxatdan o'tish formasini to'ldiring yoki biz bilan bevosita bog'laning — sizdan xabar kutamiz.</p>
             <div class="breadcrumb">
-                <a href="index.html">Asosiy</a>
+                <a href="index.php">Asosiy</a>
                 <span class="sep">/</span>
                 <span>Bog'lanish</span>
             </div>
@@ -495,22 +495,22 @@
                 <div class="footer-col">
                     <h4>Tezkor Havolalar</h4>
                     <ul>
-                        <li><a href="index.html">Asosiy</a></li>
-                        <li><a href="groups.html">Dasturlarimiz</a></li>
-                        <li><a href="teachers.html">O'qituvchilar</a></li>
-                        <li><a href="news.html">Maktab Yangiliklari</a></li>
-                        <li><a href="contact.html">Qabul</a></li>
+                        <li><a href="index.php">Asosiy</a></li>
+                        <li><a href="groups.php">Dasturlarimiz</a></li>
+                        <li><a href="teachers.php">O'qituvchilar</a></li>
+                        <li><a href="news.php">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.php">Qabul</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Yo'nalishlar</h4>
                     <ul>
-                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
-                        <li><a href="groups.html">Robototexnika</a></li>
-                        <li><a href="groups.html">Aniq Fanlar</a></li>
-                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
-                        <li><a href="groups.html">Chet Tillari</a></li>
-                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                        <li><a href="groups.php">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.php">Robototexnika</a></li>
+                        <li><a href="groups.php">Aniq Fanlar</a></li>
+                        <li><a href="groups.php">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.php">Chet Tillari</a></li>
+                        <li><a href="groups.php">Xorijda O'qish</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -531,7 +531,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
-                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+                <p>❤️ bilan yaratildi — <a href="index.php">SHAMS Maktabi</a> uchun</p>
             </div>
         </div>
     </footer>

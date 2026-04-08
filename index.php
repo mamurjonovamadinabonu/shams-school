@@ -1,3 +1,11 @@
+<?php
+require_once __DIR__ . '/admin/includes/config.php';
+$db = getDB();
+$discounts = $db->query("SELECT * FROM discounts WHERE active=1 ORDER BY id DESC")->fetchAll();
+$sRows = $db->query("SELECT key, value FROM settings")->fetchAll();
+$settings = [];
+foreach($sRows as $r) { $settings[$r['key']] = $r['value']; }
+?>
 ﻿<!DOCTYPE html>
 <html lang="uz">
 
@@ -488,7 +496,7 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="index.html" class="nav-logo">
+            <a href="index.php" class="nav-logo">
                 <div class="nav-logo-icon">S</div>
                 <div class="nav-logo-text">
                     <span>SHAMS Maktabi</span>
@@ -496,11 +504,11 @@
                 </div>
             </a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Asosiy</a></li>
-                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
-                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
-                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
-                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+                <li><a href="index.php" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.php" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.php" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.php" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.php" class="nav-link">Bog'lanish</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -517,8 +525,8 @@
                 <h1>Kelajak Yetakchilarini<br>Bugun Shakllantirmoqdamiz</h1>
                 <p>An'ana va innovatsiya uyg'unlashgan nufuzli xususiy maktab. Biz ta'lim, texnologiya va xarakter rivojidagi mukammallik orqali qiziquvchan aqllarni tarbiyalaymiz.</p>
                 <div class="slide-actions">
-                    <a href="groups.html" class="btn btn-primary">Dasturlarni Ko'rish</a>
-                    <a href="contact.html" class="btn btn-outline"
+                    <a href="groups.php" class="btn btn-primary">Dasturlarni Ko'rish</a>
+                    <a href="contact.php" class="btn btn-outline"
                         style="color:#fff;border-color:rgba(255,255,255,0.6);">Hozir Yozilish</a>
                 </div>
             </div>
@@ -530,8 +538,8 @@
                 <h1>Raqamli Asrning<br>Zamonaviy Ta'limi</h1>
                 <p>Zamonaviy texnologiyalar bilan jihozlangan sinfxonalar, ilg'or texnologiyalar va ishtiyoqli o'qituvchilar birlashib, tengsiz o'quv muhitini yaratadi.</p>
                 <div class="slide-actions">
-                    <a href="teachers.html" class="btn btn-primary">O'qituvchilarimiz bilan Tanishing</a>
-                    <a href="news.html" class="btn btn-outline"
+                    <a href="teachers.php" class="btn btn-primary">O'qituvchilarimiz bilan Tanishing</a>
+                    <a href="news.php" class="btn btn-outline"
                         style="color:#fff;border-color:rgba(255,255,255,0.6);">So'nggi Yangiliklar</a>
                 </div>
             </div>
@@ -543,8 +551,8 @@
                 <h1>1-sinfdan<br>Global Muvaffaqiyatga</h1>
                 <p>Ko'p tilli dasturlar, xorijda o'qish imkoniyatlari va xalqaro tan olingan o'quv dasturi orqali o'quvchilarni jahonning yetakchi universitetlariga tayyorlaymiz.</p>
                 <div class="slide-actions">
-                    <a href="contact.html" class="btn btn-primary">Hozir Ariza Topshiring</a>
-                    <a href="groups.html" class="btn btn-outline"
+                    <a href="contact.php" class="btn btn-primary">Hozir Ariza Topshiring</a>
+                    <a href="groups.php" class="btn btn-outline"
                         style="color:#fff;border-color:rgba(255,255,255,0.6);">Yo'nalishlarni Ko'rish</a>
                 </div>
             </div>
@@ -567,19 +575,19 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item reveal">
-                    <span class="stat-number">1200+</span>
+                    <span class="stat-number"><?= htmlspecialchars($settings['total_students'] ?? '1200+') ?></span>
                     <p class="stat-label">O'quvchilar Soni</p>
                 </div>
                 <div class="stat-item reveal">
-                    <span class="stat-number">60+</span>
+                    <span class="stat-number"><?= htmlspecialchars($settings['total_teachers'] ?? '60+') ?></span>
                     <p class="stat-label">Malakali O'qituvchilar</p>
                 </div>
                 <div class="stat-item reveal">
-                    <span class="stat-number">15+</span>
+                    <span class="stat-number"><?= htmlspecialchars($settings['years_experience'] ?? '15+') ?></span>
                     <p class="stat-label">Yillik Tajriba</p>
                 </div>
                 <div class="stat-item reveal">
-                    <span class="stat-number">98%</span>
+                    <span class="stat-number"><?= htmlspecialchars($settings['admission_rate'] ?? '98') ?>%</span>
                     <p class="stat-label">Universitetga Kirish Darajasi</p>
                 </div>
             </div>
@@ -643,7 +651,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="groups.html" class="btn btn-primary">Dasturlarimizni Ko'ring</a>
+                    <a href="groups.php" class="btn btn-primary">Dasturlarimizni Ko'ring</a>
                 </div>
             </div>
         </div>
@@ -653,11 +661,16 @@
     <section class="discount-block">
         <div class="container" style="position:relative;z-index:1;">
             <h2>🎉 Chegirmalar Mavjud!</h2>
-            <p>1–4-sinflar uchun maxsus imtiyozlar · Aka-singil uchun 25% gacha chegirma · Layoqat asosida stipendiyalar
-                mavjud</p>
-            <a href="contact.html" class="btn btn-primary"
-                style="margin-top:24px;background:#E53935;box-shadow:0 4px 20px rgba(229,57,53,0.4);">Chegirma uchun Ariza
-                →</a>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:15px;margin:20px 0;">
+                <?php foreach($discounts as $d): ?>
+                <div style="background:rgba(255,255,255,0.2);padding:10px 20px;border-radius:10px;">
+                    <strong style="color:#E53935;font-size:1.1rem;"><?= htmlspecialchars($d['percent']) ?>%</strong> 
+                    <span style="color:#7c2a00;font-weight:600;"><?= htmlspecialchars($d['title']) ?></span>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <a href="contact.php" class="btn btn-primary"
+                style="margin-top:10px;background:#E53935;box-shadow:0 4px 20px rgba(229,57,53,0.4);">Chegirma uchun Ariza →</a>
         </div>
     </section>
 
@@ -708,7 +721,7 @@
         <div class="container" style="position:relative;z-index:1;">
             <h2>Sayohatni Boshlashga Tayyormisiz?</h2>
             <p>2025-2026 o'quv yiliga qabul boshlandi. O'rinlar cheklangan — farzandingizning o'rnini bugun ta'minlang.</p>
-            <a href="contact.html" class="btn btn-primary">Bugun Yoziling</a>
+            <a href="contact.php" class="btn btn-primary">Bugun Yoziling</a>
         </div>
     </section>
 
@@ -735,22 +748,22 @@
                 <div class="footer-col">
                     <h4>Tezkor Havolalar</h4>
                     <ul>
-                        <li><a href="index.html">Asosiy</a></li>
-                        <li><a href="groups.html">Dasturlarimiz</a></li>
-                        <li><a href="teachers.html">O'qituvchilar</a></li>
-                        <li><a href="news.html">Maktab Yangiliklari</a></li>
-                        <li><a href="contact.html">Qabul</a></li>
+                        <li><a href="index.php">Asosiy</a></li>
+                        <li><a href="groups.php">Dasturlarimiz</a></li>
+                        <li><a href="teachers.php">O'qituvchilar</a></li>
+                        <li><a href="news.php">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.php">Qabul</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Yo'nalishlar</h4>
                     <ul>
-                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
-                        <li><a href="groups.html">Robototexnika</a></li>
-                        <li><a href="groups.html">Aniq Fanlar</a></li>
-                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
-                        <li><a href="groups.html">Chet Tillari</a></li>
-                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                        <li><a href="groups.php">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.php">Robototexnika</a></li>
+                        <li><a href="groups.php">Aniq Fanlar</a></li>
+                        <li><a href="groups.php">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.php">Chet Tillari</a></li>
+                        <li><a href="groups.php">Xorijda O'qish</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -775,7 +788,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
-                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+                <p>❤️ bilan yaratildi — <a href="index.php">SHAMS Maktabi</a> uchun</p>
             </div>
         </div>
     </footer>

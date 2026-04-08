@@ -200,7 +200,7 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="index.html" class="nav-logo">
+            <a href="index.php" class="nav-logo">
                 <div class="nav-logo-icon">S</div>
                 <div class="nav-logo-text">
                     <span>SHAMS Maktabi</span>
@@ -208,11 +208,11 @@
                 </div>
             </a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Asosiy</a></li>
-                <li><a href="groups.html" class="nav-link">Guruhlar</a></li>
-                <li><a href="teachers.html" class="nav-link">O'qituvchilar</a></li>
-                <li><a href="news.html" class="nav-link">Yangiliklar</a></li>
-                <li><a href="contact.html" class="nav-link">Bog'lanish</a></li>
+                <li><a href="index.php" class="nav-link">Asosiy</a></li>
+                <li><a href="groups.php" class="nav-link">Guruhlar</a></li>
+                <li><a href="teachers.php" class="nav-link">O'qituvchilar</a></li>
+                <li><a href="news.php" class="nav-link">Yangiliklar</a></li>
+                <li><a href="contact.php" class="nav-link">Bog'lanish</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -226,7 +226,7 @@
             <h1>Akademik Dasturlarimiz</h1>
             <p>Har bir o'quvchining noyob salohiyatini kashf etish va kuchaytirish uchun mo'ljallangan 6 ta ixtisoslashtirilgan yo'nalish — 1-11-sinflar uchun.</p>
             <div class="breadcrumb">
-                <a href="index.html">Asosiy</a>
+                <a href="index.php">Asosiy</a>
                 <span class="sep">/</span>
                 <span>Dasturlar</span>
             </div>
@@ -247,7 +247,7 @@
                         <span class="grade-pill">10–11-sinflar</span>
                     </div>
                 </div>
-                <a href="contact.html" class="btn btn-primary"
+                <a href="contact.php" class="btn btn-primary"
                     style="background:var(--accent);box-shadow:0 4px 20px rgba(245,166,35,0.4);white-space:nowrap;position:relative;z-index:1;">Hozir
                     Ariza Topshirish →</a>
             </div>
@@ -276,7 +276,7 @@
                             <span class="card-tag">Ma'lumotlar Fani</span>
                             <span class="card-tag">Sun'iy Intellekt</span>
                         </div>
-                        <a href="contact.html" class="card-footer-link">IT ga Yozilish →</a>
+                        <a href="contact.php" class="card-footer-link">IT ga Yozilish →</a>
                     </div>
                 </div>
 
@@ -296,7 +296,7 @@
                             <span class="card-tag">Elektronika</span>
                             <span class="card-tag">CAD Dizayn</span>
                         </div>
-                        <a href="contact.html" class="card-footer-link">Robototexnikaga Yozilish →</a>
+                        <a href="contact.php" class="card-footer-link">Robototexnikaga Yozilish →</a>
                     </div>
                 </div>
 
@@ -317,7 +317,7 @@
                             <span class="card-tag">Olimpiada Tayyorligi</span>
                             <span class="card-tag">Statistika</span>
                         </div>
-                        <a href="contact.html" class="card-footer-link">Aniq Fanlarga Yozilish →</a>
+                        <a href="contact.php" class="card-footer-link">Aniq Fanlarga Yozilish →</a>
                     </div>
                 </div>
 
@@ -337,7 +337,7 @@
                             <span class="card-tag">Lab Tadqiqoti</span>
                             <span class="card-tag">Ekologiya</span>
                         </div>
-                        <a href="contact.html" class="card-footer-link">Tabiiy Fanlarga Yozilish →</a>
+                        <a href="contact.php" class="card-footer-link">Tabiiy Fanlarga Yozilish →</a>
                     </div>
                 </div>
 
@@ -358,7 +358,7 @@
                             <span class="card-tag">Fransuz Tili</span>
                             <span class="card-tag">IELTS Tayyorligi</span>
                         </div>
-                        <a href="contact.html" class="card-footer-link">Chet Tillariga Yozilish →</a>
+                        <a href="contact.php" class="card-footer-link">Chet Tillariga Yozilish →</a>
                     </div>
                 </div>
 
@@ -379,7 +379,7 @@
                             <span class="card-tag">Janubiy Koreya</span>
                             <span class="card-tag">Stipendiyalar</span>
                         </div>
-                        <a href="contact.html" class="card-footer-link">Xorijda O'qish haqida →</a>
+                        <a href="contact.php" class="card-footer-link">Xorijda O'qish haqida →</a>
                     </div>
                 </div>
             </div>
@@ -410,22 +410,22 @@
                 <div class="footer-col">
                     <h4>Tezkor Havolalar</h4>
                     <ul>
-                        <li><a href="index.html">Asosiy</a></li>
-                        <li><a href="groups.html">Dasturlarimiz</a></li>
-                        <li><a href="teachers.html">O'qituvchilar</a></li>
-                        <li><a href="news.html">Maktab Yangiliklari</a></li>
-                        <li><a href="contact.html">Qabul</a></li>
+                        <li><a href="index.php">Asosiy</a></li>
+                        <li><a href="groups.php">Dasturlarimiz</a></li>
+                        <li><a href="teachers.php">O'qituvchilar</a></li>
+                        <li><a href="news.php">Maktab Yangiliklari</a></li>
+                        <li><a href="contact.php">Qabul</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Yo'nalishlar</h4>
                     <ul>
-                        <li><a href="groups.html">Axborot Texnologiyalari</a></li>
-                        <li><a href="groups.html">Robototexnika</a></li>
-                        <li><a href="groups.html">Aniq Fanlar</a></li>
-                        <li><a href="groups.html">Tabiiy Fanlar</a></li>
-                        <li><a href="groups.html">Chet Tillari</a></li>
-                        <li><a href="groups.html">Xorijda O'qish</a></li>
+                        <li><a href="groups.php">Axborot Texnologiyalari</a></li>
+                        <li><a href="groups.php">Robototexnika</a></li>
+                        <li><a href="groups.php">Aniq Fanlar</a></li>
+                        <li><a href="groups.php">Tabiiy Fanlar</a></li>
+                        <li><a href="groups.php">Chet Tillari</a></li>
+                        <li><a href="groups.php">Xorijda O'qish</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -446,7 +446,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 SHAMS Xususiy Maktabi. Barcha huquqlar himoyalangan.</p>
-                <p>❤️ bilan yaratildi — <a href="index.html">SHAMS Maktabi</a> uchun</p>
+                <p>❤️ bilan yaratildi — <a href="index.php">SHAMS Maktabi</a> uchun</p>
             </div>
         </div>
     </footer>
