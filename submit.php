@@ -2,11 +2,11 @@
 // ==============================================
 //  SHAMS School — Ariza qabul qilish (Backend)
 // ==============================================
-require_once __DIR__ . '/panel/includes/config.php';
+require_once __DIR__ . '/admin/includes/config.php';
 
 // Faqat POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 }
 
@@ -29,7 +29,7 @@ if (empty($direction)) $errors[] = "Yo'nalish tanlanmadi";
 if (empty($phone))     $errors[] = "Telefon kiritilmadi";
 
 if (!empty($errors)) {
-    header("Location: contact.html?error=" . urlencode(implode(", ", $errors)));
+    header("Location: contact.php?error=" . urlencode(implode(", ", $errors)));
     exit();
 }
 
@@ -47,12 +47,5 @@ try {
     file_put_contents(__DIR__ . '/database/submissions.txt', $logData, FILE_APPEND | LOCK_EX);
 }
 
-// Email (ixtiyoriy)
-$to      = ADMIN_EMAIL;
-$subject = "Yangi ariza: $firstName $lastName";
-$message = "Ism: $firstName $lastName\nSinf: $grade\nYo'nalish: $direction\nTelefon: $phone";
-$headers = "From: noreply@shamsschool.uz";
-@mail($to, $subject, $message, $headers);
-
-header("Location: contact.html?success=1");
+header("Location: contact.php?success=1");
 exit();
