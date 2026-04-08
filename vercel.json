@@ -15,6 +15,7 @@
   },
   "routes": [
     { "src": "/panel/(.*)", "dest": "/panel/$1" },
-    { "src": "/admin/(.*)", "dest": "/admin/$1" }
+    { "src": "/admin/(.*)", "dest": "/admin/$1" },
+    { "src": "/", "dest": "/index.php" }
   ]
 }
