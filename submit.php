@@ -45,7 +45,7 @@ $appData = [
     'created_at' => date('Y-m-d H:i:s')
 ];
 
-$res = fb_request('/applications', 'POST', $appData);
+@fb_request('/applications', 'POST', $appData);
 
 header("Location: contact.php?success=1");
 exit();

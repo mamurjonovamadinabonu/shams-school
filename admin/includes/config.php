@@ -3,7 +3,7 @@
 //  SHAMS School — Backend Config (FIREBASE)
 // =============================================
 
-define('FIREBASE_URL', 'https://shams-school-84b9f-default-rtdb.firebaseio.com/'); // TO DO: Update this if region is different!
+define('FIREBASE_URL', 'https://shams-school-84b9f-default-rtdb.firebaseio.com/');
 define('ADMIN_USER', 'admin');
 define('ADMIN_PASS', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); // "password"
 define('SESSION_NAME', 'shams_admin');
@@ -12,51 +12,45 @@ define('ADMIN_EMAIL', 'admin@shamsschool.uz');
 
 // Session
 if (session_status() === PHP_SESSION_NONE) {
-    session_name(SESSION_NAME);
-    session_start();
+    @session_name(SESSION_NAME);
+    @session_start();
 }
 
 /**
- * Firebase bilan ishlash uchun asosiy funksiya (cURL orqali)
+ * Firebase bilan ishlash uchun stream stream_context (CURL ishlamasa Vercelda ishlaydi)
  */
 function fb_request($path, $method = 'GET', $data = null) {
     $url = FIREBASE_URL . ltrim($path, '/') . '.json';
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5); // TIZIM QOTIB QOLMASLIGI UCHUN!
     
-    if ($method === 'POST') {
-        curl_setopt($ch, CURLOPT_POST, true);
-        if ($data !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    } elseif ($method === 'PUT') {
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        if ($data !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    } elseif ($method === 'PATCH') {
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-        if ($data !== null) curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    } elseif ($method === 'DELETE') {
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => $method,
+            'ignore_errors' => true,
+            'timeout' => 5
+        ],
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false
+        ]
+    ];
+    
+    if ($data !== null) {
+        $options['http']['content'] = json_encode($data);
     }
     
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $context  = stream_context_create($options);
+    $result = @file_get_contents($url, false, $context);
     
-    $resData = json_decode($response ?: '{}', true);
-    return $resData;
+    return json_decode($result ?: '{}', true);
 }
 
 // Boshlang'ich datalarni Firebase'ga yuklash
 function initFirebase() {
     $teachers = fb_request('/teachers');
-    // Agar baza bo'm-bo'sh bo'lsa (yangi API)
     if (empty($teachers)) {
         $sampleTeachers = [
-            't1' => ['name' => 'Asrorjon Homidjonov', 'subject' => 'Ingliz tili - IELTS', 'experience' => '', 'bio' => 'Grammatika, IELTS/CEFR/SAT, DTM', 'photo' => 'https://ui-avatars.com/api/?name=Asrorjon+Homidjonov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')],
-            't2' => ['name' => 'Farhodjon Ahmedov', 'subject' => 'Ingliz tili', 'experience' => '', 'bio' => 'CEFR va IELTS, DTM, Grammatika', 'photo' => 'https://ui-avatars.com/api/?name=Farhodjon+Ahmedov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')],
-            't3' => ['name' => 'Shaxzodaxon Xamroliyeva', 'subject' => 'Ingliz tili', 'experience' => '', 'bio' => 'Grammatika, DTM, Milliy sertifikat', 'photo' => 'https://ui-avatars.com/api/?name=Shaxzodaxon+Xamroliyeva&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')],
-            't4' => ['name' => 'Jamshidbek G\'ulomqodirov', 'subject' => 'Matematika', 'experience' => '', 'bio' => 'Matematika, DTM, Milliy sertifikat', 'photo' => 'https://ui-avatars.com/api/?name=Jamshidbek+G\'ulomqodirov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]
+            't1' => ['name' => 'Asrorjon Homidjonov', 'subject' => 'Ingliz tili - IELTS', 'experience' => '', 'bio' => 'Grammatika, IELTS/CEFR/SAT, DTM', 'photo' => 'https://ui-avatars.com/api/?name=Asrorjon+Homidjonov&background=e3f2fd&color=0c2b4e&size=200', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]
         ];
         fb_request('/teachers', 'PUT', $sampleTeachers);
     }
